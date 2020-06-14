@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_auth/services/auth.dart';
+import 'package:flutter_firebase_auth/services/loading.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class _RegisterState extends State<Register> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   String email = '';
   String password = '';
@@ -17,7 +19,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       backgroundColor: Colors.blue,
       appBar: AppBar(
         title: Text('Sign Up'),
@@ -75,10 +77,14 @@ class _RegisterState extends State<Register> {
               RaisedButton(
                 onPressed: () async {
                   if(_formKey.currentState.validate()){
+                    setState(() {
+                      loading = true;
+                    });
                     dynamic result = await _auth.register(email, password);
                     if(result == null){
                       setState(() {
                         error = 'Invalid email';
+                        loading = false;
                       });
                     }
                   }

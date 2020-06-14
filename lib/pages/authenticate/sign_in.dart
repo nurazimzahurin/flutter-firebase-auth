@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_auth/pages/authenticate/register.dart';
 import 'package:flutter_firebase_auth/services/auth.dart';
+import 'package:flutter_firebase_auth/services/loading.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class _SignInState extends State<SignIn> {
   
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   String email = '';
   String password = '';
@@ -18,7 +20,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       backgroundColor: Colors.blue,
       appBar: AppBar(
         title: Text('Sign in'),
@@ -84,10 +86,14 @@ class _SignInState extends State<SignIn> {
               RaisedButton(
                 onPressed: () async {
                   if(_formKey.currentState.validate()){
+                    setState(() {
+                      loading = true;
+                    });
                     dynamic result = await _auth.signIn(email, password);
                     if(result == null){
                       setState(() {
                         error = 'Invalid credentials';
+                        loading = false;
                       });
                     }
                   }
