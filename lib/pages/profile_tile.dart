@@ -18,6 +18,7 @@ class ProfileTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Text('Email :', style: TextStyle(color:Colors.black, fontSize:12),),
               Text(
                 this.profile.email,
                 style: TextStyle(
@@ -25,15 +26,17 @@ class ProfileTile extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 16),
               ),
+              Text('Name :', style: TextStyle(color:Colors.black, fontSize:12),),
               Text(
-                this.profile.name,
+                this.profile.name == '' ? '(not set)' : this.profile.name,
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 14),
               ),
+              Text('Phone no. :', style: TextStyle(color:Colors.black, fontSize:12),),
               Text(
-                this.profile.phoneNumber,
+                this.profile.phoneNumber == '' ? '(not set)' : this.profile.phoneNumber,
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
