@@ -14,7 +14,7 @@ class ProfileTile extends StatelessWidget {
         color: Colors.blue[400],
         margin: EdgeInsets.fromLTRB(20, 6, 20, 12),
         child: Container(
-          padding: EdgeInsets.only(left: 20, top: 20),
+          padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -41,17 +41,6 @@ class ProfileTile extends StatelessWidget {
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 14),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  FlatButton.icon(
-                      onPressed: () async {
-
-                      },
-                      icon: Icon(Icons.edit_attributes),
-                      label: Text('Edit data', style: TextStyle(fontSize:12),)),
-                ],
               ),
             ],
           ),
