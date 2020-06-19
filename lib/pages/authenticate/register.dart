@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_auth/services/auth.dart';
-import 'package:flutter_firebase_auth/services/loading.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -11,15 +10,16 @@ class _RegisterState extends State<Register> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
-  bool loading = false;
 
   String email = '';
   String password = '';
+  String name = '';
+  String phone = '';
   String error = '';
 
   @override
   Widget build(BuildContext context) {
-    return loading ? Loading() : Scaffold(
+    return Scaffold(
       backgroundColor: Colors.blue,
       appBar: AppBar(
         title: Text('Sign Up'),
@@ -74,17 +74,52 @@ class _RegisterState extends State<Register> {
                 },
               ),
               SizedBox(height: 20),
+              TextFormField(
+                decoration: InputDecoration(
+                  hintText: 'Name',
+                  fillColor: Colors.blueAccent,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blueAccent, width: 2)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width:1)
+                  )
+                ),
+                onChanged: (val) {
+                  setState(() {
+                    name = val;
+                  });
+                },
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                decoration: InputDecoration(
+                  hintText: 'Phone no.',
+                  fillColor: Colors.blueAccent,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blueAccent, width: 2)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width:1)
+                  )
+                ),
+                onChanged: (val) {
+                  setState(() {
+                    phone = val;
+                  });
+                },
+              ),
+              SizedBox(height: 20),
               RaisedButton(
                 onPressed: () async {
                   if(_formKey.currentState.validate()){
-                    setState(() {
-                      loading = true;
-                    });
-                    dynamic result = await _auth.register(email, password);
+
+                    dynamic result = await _auth.register(email, password, name, phone);
                     if(result == null){
                       setState(() {
                         error = 'Invalid email';
-                        loading = false;
                       });
                     }
                   }
